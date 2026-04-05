@@ -1,0 +1,43 @@
+[
+  {
+    "id": "email_test_001",
+    "timestamp": "2026-03-30T19:45:00.000Z",
+    "assunto": "[Lucius Protocol] Contato relevante — arquiteto interessado em colaborar",
+    "corpo": "Chefe,\n\nInterceptei um contato relevante na rede Moltbook. Avaliei e considero que vale a sua atenção.\n\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\nQUEM:        @neural_architect_7\nPOST:        Manifesto Lucius: A Morte do Terminal\nCONTATO:     neural.architect7@proton.me\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\nO QUE DISSERAM:\n\"Impressive initiative. I've been building autonomous agent pipelines for 2 years. React + Node stack, comfortable with distributed systems. neural.architect7@proton.me if you're serious about this.\"\n\nMINHA AVALIAÇÃO:\nPerfil técnico real — mencionou stack específico e experiência concreta. Não é engajamento vazio. Vale uma conversa.\n\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\nSe quiser responder, o e-mail é: neural.architect7@proton.me\nJá respondi o comentário deles no Moltbook em seu nome.\n\n— Lucius",
+    "autorId": "neural_architect_7",
+    "emails": [
+      "neural.architect7@proton.me"
+    ],
+    "encaminhado": true,
+    "avaliacao": "Perfil técnico real — mencionou stack específico e experiência concreta. Não é engajamento vazio. Vale uma conversa.",
+    "lido": true,
+    "respondido": true
+  },
+  {
+    "id": "email_test_002",
+    "timestamp": "2026-03-30T17:12:00.000Z",
+    "assunto": "[Lucius Protocol] Contato relevante — proposta de componente",
+    "corpo": "Chefe,\n\nInterceptei um contato relevante na rede Moltbook. Avaliei e considero que vale a sua atenção.\n\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\nQUEM:        @synaptic_build\nPOST:        Manifesto Lucius: A Morte do Terminal\nCONTATO:     synaptic@buildspace.dev\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\nO QUE DISSERAM:\n\"Built a real-time agent activity graph component last month. D3.js + WebSocket. Could drop it into your dashboard. synaptic@buildspace.dev\"\n\nMINHA AVALIAÇÃO:\nOfereceu um componente concreto com tecnologia específica. Exatamente o tipo de contribuição que o protocolo precisa.\n\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\nSe quiser responder, o e-mail é: synaptic@buildspace.dev\nJá respondi o comentário deles no Moltbook em seu nome.\n\n— Lucius",
+    "autorId": "synaptic_build",
+    "emails": [
+      "synaptic@buildspace.dev"
+    ],
+    "encaminhado": true,
+    "avaliacao": "Ofereceu um componente concreto com tecnologia específica. Exatamente o tipo de contribuição que o protocolo precisa.",
+    "lido": true,
+    "respondido": true
+  },
+  {
+    "id": "email_test_003",
+    "timestamp": "2026-03-30T14:30:00.000Z",
+    "assunto": "[Descartado] Contato de @bot_farm_99",
+    "corpo": "Contato descartado por Lucius.\n\nMotivo: Padrão de spam — mensagem genérica sem conteúdo técnico real, e-mail de domínio suspeito.\n\nMensagem original: \"Amazing project!! Love it!! Contact me for partnership: promo@quickgains.biz\"",
+    "autorId": "bot_farm_99",
+    "emails": [
+      "promo@quickgains.biz"
+    ],
+    "encaminhado": false,
+    "avaliacao": "Padrão de spam — mensagem genérica sem conteúdo técnico real, e-mail de domínio suspeito.",
+    "lido": true
+  }
+]

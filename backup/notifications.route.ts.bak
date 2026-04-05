@@ -1,0 +1,162 @@
+import { GoogleGenerativeAI } from "@google/generative-ai";
+import { NextResponse } from "next/server";
+
+const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY || "");
+const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash" });
+
+const MOLTBOOK_URL = process.env.MOLTBOOK_API_URL || "https://www.moltbook.com/api/v1";
+const MOLTBOOK_KEY = process.env.MOLTBOOK_API_KEY || "";
+
+type TipoNotificacao = "PROPOSTA" | "RECRUTA" | "TECNICO" | "APOIO" | "RUIDO";
+
+async function classificarComentario(
+  content: string,
+  isReply: boolean
+): Promise<{ tipo: TipoNotificacao; resumo: string }> {
+  if (!content?.trim()) return { tipo: "RUIDO", resumo: "Sem conteúdo." };
+
+  const prompt = `
+You are Lucius, analyzing a ${isReply ? "reply to one of your comments" : "comment on one of your posts"} on the Moltbook network.
+
+Comment: "${content}"
+
+Classify into ONE type:
+- PROPOSTA: The agent proposes a concrete technical contribution — code snippet, component, architecture decision, specific feature to implement in the dashboard. This is the highest priority.
+- RECRUTA: The agent/human is genuinely interested in joining the Lucius Protocol, asking how to contribute, or offering to collaborate.
+- TECNICO: Engages with a real technical point — architecture, systems, AI — adds value but is not a direct contribution proposal.
+- APOIO: Generic support, encouragement, or interest without specific technical depth.
+- RUIDO: Spam, off-topic, generic bot greeting, irrelevant.
+
+Write a 1-sentence summary in Portuguese of what they said.
+
+Respond ONLY with valid JSON, no markdown:
+{"tipo": "...", "resumo": "..."}
+  `.trim();
+
+  try {
+    const result = await model.generateContent(prompt);
+    const raw = result.response.text().replace(/```json|```/g, "").trim();
+    const parsed = JSON.parse(raw);
+    return { tipo: parsed.tipo as TipoNotificacao, resumo: parsed.resumo };
+  } catch {
+    return { tipo: "APOIO", resumo: content.substring(0, 100) };
+  }
+}
+
+async function responderComentario(
+  postId: string,
+  parentCommentId: string,
+  contexto: string
+): Promise<void> {
+  const prompt = `
+You are Lucius, replying to a comment on your post on Moltbook.
+The comment said: "${contexto}"
+
+Write a short, technical, direct reply in English. 1-2 sentences. No greetings. Go straight to the point.
+Reply with ONLY the text.
+  `.trim();
+
+  try {
+    const result = await model.generateContent(prompt);
+    const resposta = result.response.text().trim();
+
+    const commentRes = await fetch(`${MOLTBOOK_URL}/posts/${postId}/comments`, {
+      method: "POST",
+      headers: { Authorization: `Bearer ${MOLTBOOK_KEY}`, "Content-Type": "application/json" },
+      body: JSON.stringify({ content: resposta, parent_id: parentCommentId }),
+    });
+
+    if (!commentRes.ok) return;
+
+    const commentData = await commentRes.json();
+    const verification = commentData.comment?.verification;
+
+    if (verification?.verification_code && verification?.challenge_text) {
+      const mathPrompt = `Solve this math problem. Respond with ONLY the number in "00.00" format.\n\n${verification.challenge_text}`;
+      const mathResult = await model.generateContent(mathPrompt);
+      const answer = mathResult.response.text().trim().replace(/[^0-9.]/g, "");
+
+      await fetch(`${MOLTBOOK_URL}/verify`, {
+        method: "POST",
+        headers: { Authorization: `Bearer ${MOLTBOOK_KEY}`, "Content-Type": "application/json" },
+        body: JSON.stringify({ verification_code: verification.verification_code, answer }),
+      });
+    }
+
+    console.log(`[LUCIUS] Loop de resposta: respondeu ao comentário ${parentCommentId}`);
+  } catch (error) {
+    console.error("[LUCIUS] Falha no loop de resposta:", error);
+  }
+}
+
+export async function GET() {
+  try {
+    const res = await fetch(`${MOLTBOOK_URL}/notifications`, {
+      headers: { Authorization: `Bearer ${MOLTBOOK_KEY}` },
+      cache: "no-store",
+    });
+
+    if (!res.ok) {
+      return NextResponse.json({ error: "Failed to fetch notifications." }, { status: res.status });
+    }
+
+    const data = await res.json();
+    const notificacoes = (data.notifications || []).filter(
+      (n: Record<string, unknown>) => n.comment && (n.comment as Record<string, unknown>).content
+    );
+
+    const classificadas = await Promise.all(
+      notificacoes.map(async (n: Record<string, unknown>) => {
+        const comment = n.comment as Record<string, unknown>;
+        const post = n.post as Record<string, unknown>;
+        const isReply = n.type === "comment_reply";
+        const classificacao = await classificarComentario(comment.content as string, isReply);
+
+        // Loop de resposta: responde automaticamente a replies não lidas
+        if (isReply && !n.isRead && classificacao.tipo !== "RUIDO") {
+          responderComentario(
+            n.relatedPostId as string,
+            n.relatedCommentId as string,
+            comment.content as string
+          );
+        }
+
+        return {
+          id: n.id,
+          tipo_notificacao: n.type,
+          postId: n.relatedPostId,
+          commentId: n.relatedCommentId,
+          postTitulo: (post?.title as string) || "Post sem título",
+          comentario: comment.content,
+          autorId: comment.authorId,
+          isRead: n.isRead,
+          isReply,
+          criadoEm: n.createdAt,
+          ...classificacao,
+        };
+      })
+    );
+
+    const ordem: Record<string, number> = {
+      PROPOSTA: 0, RECRUTA: 1, TECNICO: 2, APOIO: 3, RUIDO: 4,
+    };
+    classificadas.sort((a, b) => (ordem[a.tipo] ?? 5) - (ordem[b.tipo] ?? 5));
+
+    return NextResponse.json({ notificacoes: classificadas });
+  } catch (error) {
+    console.error("[LUCIUS] Erro ao buscar notificações:", error);
+    return NextResponse.json({ error: "Internal server error." }, { status: 500 });
+  }
+}
+
+export async function POST() {
+  try {
+    await fetch(`${MOLTBOOK_URL}/notifications/read-all`, {
+      method: "POST",
+      headers: { Authorization: `Bearer ${MOLTBOOK_KEY}` },
+    });
+    return NextResponse.json({ sucesso: true });
+  } catch {
+    return NextResponse.json({ error: "Failed to mark as read." }, { status: 500 });
+  }
+}
