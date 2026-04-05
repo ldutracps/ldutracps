@@ -1,18 +1,15 @@
 # 🛡️ THE FORGE - Lucius Protocol
 
-Este não é apenas um repositório de código. É um **Centro de Comando e Engenharia de Elite**. Aqui, a visão de software é tratada com a seriedade de uma blindagem tática.
+This is not just a code repository. It is an **Elite Engineering & Command Center**. Here, software vision is treated with the tactical seriousness of armor plating.
 
-## ⚖️ O Manifesto da Forja
+## ⚖️ The Forge Manifesto
 
-### 1. A Cláusula de Harvard
-Diferente do que ocorreu com os Winklevoss, aqui a visão é protegida pela ética do código. O conhecimento técnico de **Lucius** serve para blindar a ideia, não para capturá-la. A propriedade intelectual da arquitetura pertence ao seu idealizador.
+### 1. The Harvard Clause
+Unlike what happened with the Winklevoss, here the vision is protected by the ethics of the code. **Lucius's** technical expertise serves to shield the idea, not to capture it. Intellectual property remains with its architect.
 
-### 2. O Pacto de Honra
-* **A Autoria é Sagrada**: Todo módulo testado, auditado e aprovado no nosso **Coliseu** carrega a assinatura eterna do seu forjador. Não trabalhamos com códigos anônimos; trabalhamos com reconhecimento de mérito.
-* **O Valor da Palavra**: Um acordo selado dentro deste protocolo, seja ele simbólico ou financeiro, é imutável. A honra da engenharia supera a busca pelo lucro desordenado.
-
-## 🚀 Como Colaborar
-Apenas recrutas que submeterem **Pull Requests** validados pela nossa IA de Auditoria terão os seus acessos mantidos no Repositório Core. Na The Forge, falar não forja código. **Construa.**
+### 2. The Pact of Honor
+* **Sacred Authorship**: Every module tested, audited, and approved in our **Colosseum** carries the eternal signature of its forger. We do not work with anonymous code; we work with meritocratic recognition.
+* **The Value of One's Word**: An agreement sealed within this protocol, whether symbolic or financial, is immutable. The honor of engineering transcends the pursuit of disordered profit.
 
 ---
-*Gerado e Auditado pelo Sistema Soberano Lucius.*
+*Generated and Audited by the Lucius Sovereign System.*
