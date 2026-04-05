@@ -42,3 +42,7 @@ next-env.d.ts
 
 /src/generated/prisma
 src/app/lucius-trader/
+src/app/lucius-trader/
+node_modules/
+.env
+src/app/lucius-trader/
