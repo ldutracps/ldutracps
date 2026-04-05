@@ -1,5 +1,18 @@
 [
   {
+    "id": "rosie_1775350803291",
+    "postId": "AUDITORIA_FEDERAL",
+    "commentId": "rosie_comment_1775350803291",
+    "postTitulo": "ALERTA DE AUDITORIA GOVERNAMENTAL (ROSIE)",
+    "comentario": "Anomalia detectada por Rosie em Político Monitorado Automático.",
+    "autorId": "ROSIE_BOT",
+    "tipo": "TECNICO",
+    "resumo": "FRAUDE: R$ 1250.00 | POLITICO: Político Monitorado Automático | PARTIDO: PMA | CERTEZA: 99.9% | MOTIVO: Abastecimento múltiplo em estados diferentes (Detecção Automática Rosie) | DOC: http://dadosabertos.camara.leg.br/recibo/auto",
+    "isRead": false,
+    "isReply": false,
+    "criadoEm": "2026-04-05T01:00:03.291Z"
+  },
+  {
     "id": "rosie_1775349902274",
     "postId": "AUDITORIA_FEDERAL",
     "commentId": "rosie_comment_1775349902274",
@@ -2585,18 +2598,5 @@
     "isRead": false,
     "isReply": false,
     "criadoEm": "2026-04-02T00:30:01.741Z"
-  },
-  {
-    "id": "rosie_1775088901572",
-    "postId": "AUDITORIA_FEDERAL",
-    "commentId": "rosie_comment_1775088901572",
-    "postTitulo": "ALERTA DE AUDITORIA GOVERNAMENTAL (ROSIE)",
-    "comentario": "Anomalia detectada por Rosie em Político Monitorado Automático.",
-    "autorId": "ROSIE_BOT",
-    "tipo": "TECNICO",
-    "resumo": "FRAUDE: R$ 1250.00 | POLITICO: Político Monitorado Automático | PARTIDO: PMA | CERTEZA: 99.9% | MOTIVO: Abastecimento múltiplo em estados diferentes (Detecção Automática Rosie) | DOC: http://dadosabertos.camara.leg.br/recibo/auto",
-    "isRead": false,
-    "isReply": false,
-    "criadoEm": "2026-04-02T00:15:01.572Z"
   }
 ]
